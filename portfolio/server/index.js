@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-// CORS configuration: allow configured CLIENT_URL, local Vite ports, or wildcard
+// CORS: allow origins listed in CLIENT_URL (comma-separated) plus localhost for development
 const configuredOrigins = (process.env.CLIENT_URL || "")
   .split(",")
   .map((u) => u.trim().replace(/\/$/, ""))
@@ -14,25 +14,17 @@ const configuredOrigins = (process.env.CLIENT_URL || "")
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (mobile apps, curl, server-to-server)
+      // No Origin header: curl, server-to-server, direct downloads
       if (!origin) return callback(null, true);
-      // Allow if wildcard is set or origin is in configuredOrigins
-      if (configuredOrigins.includes("*") || configuredOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      // Allow localhost / 127.0.0.1 on any port during development
-      if (/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
-        return callback(null, true);
-      }
-      // If deployed on Vercel preview or custom domain, also allow if matches vercel.app
-      if (/^https:\/\/.*\.vercel\.app$/.test(origin)) {
-        return callback(null, true);
-      }
-      return callback(null, true); // Permissive fallback for seamless grading & evaluation
+      if (configuredOrigins.includes(origin)) return callback(null, true);
+      if (/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) return callback(null, true);
+      return callback(null, false);
     },
-    credentials: true,
   })
 );
+
+// Render sits behind a proxy; needed so req.ip is the real client IP (rate limiting)
+app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "50kb" }));
 

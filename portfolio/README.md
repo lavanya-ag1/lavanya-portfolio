@@ -4,8 +4,8 @@ Full-stack portfolio built with React (Vite), Node.js + Express, and MongoDB (Mo
 It has a typewriter hero, animated skill bars, project filters, timeline, certifications,
 dark/light mode, a contact form saved to MongoDB, and CV download (PDF + DOCX) served by the backend.
 
-**Live site:** https://your-portfolio.vercel.app
-**API:** https://your-api.onrender.com
+**Live site:** https://lavanya-portfolio.vercel.app
+**API:** _add your Render URL here_
 
 ## Structure
 ```

@@ -72,8 +72,8 @@ export const projects = [
       "Applied Llama Guard filters to prevent hallucinations in financial reporting"
     ],
     tech: ["Python", "FastAPI", "LangChain", "LangGraph", "pgvector", "Redis", "RAG"],
-    github: "https://github.com/lavanya-agarwal/multi-agent-news-research",
-    live: "https://news-agents-demo.vercel.app",
+    github: null, // TODO: add repo URL once public
+    live: null,
     featured: true,
   },
   {
@@ -90,8 +90,8 @@ export const projects = [
       "Secure JWT authentication with role-based dashboard controls"
     ],
     tech: ["React.js", "Express.js", "MongoDB", "Node.js", "Mongoose", "JWT"],
-    github: "https://github.com/lavanya-agarwal/campus-placement-tracker",
-    live: "https://cpct-portal.vercel.app",
+    github: null, // TODO: add repo URL once public
+    live: null,
     featured: true,
   },
   {
@@ -108,8 +108,8 @@ export const projects = [
       "Responsive data table views with multi-column filtering and export options"
     ],
     tech: ["React.js", "Node.js", "Express.js", "MongoDB", "REST APIs", "CSS Grid"],
-    github: "https://github.com/lavanya-agarwal/cybersafe-compliance",
-    live: "https://cybersafe-compliance.vercel.app",
+    github: null, // TODO: add repo URL once public
+    live: null,
     featured: true,
   },
   {
@@ -126,7 +126,7 @@ export const projects = [
       "Single-page navigation with React Router SPA fallback"
     ],
     tech: ["React 18", "Express.js", "Node.js", "MongoDB", "Framer Motion", "Vite"],
-    github: "https://github.com/lavanya-agarwal/mern-portfolio",
+    github: "https://github.com/lavanya-ag1/lavanya-portfolio",
     live: "https://lavanya-portfolio.vercel.app",
     featured: false,
   },
@@ -196,7 +196,7 @@ export const certs = [
     issuer: "JK Lakshmipat University (for Dynamicore Strategies)",
     year: "2026",
     badge: "Industry Internship",
-    image: "/cert-internship.png",
+    image: null, // add the scanned certificate to /public and set its path here
     skills: "FastAPI, LangChain, LangGraph, RAG, pgvector, Redis, Postman",
     description: "Official internship authorization certificate from JKLU (IET) confirming the AI/ML engineering internship at Dynamicore Strategies Private Limited, Jaipur. Role: Financial AI Model Intern.",
     link: "https://jklu.edu.in",

@@ -10,10 +10,11 @@
    Send a message from the contact form, then check Atlas > Browse Collections > `messages`.
 
 ## 2. Backend on Render
-1. Push the repo to GitHub first (see `commits.sh`).
+1. Push the repo to GitHub first (`git push`).
 2. render.com > New > **Web Service** > pick your repo.
 3. Root Directory: `server` | Build: `npm install` | Start: `npm start` | Instance: Free.
 4. Environment variables: `MONGO_URI` (your Atlas string). Leave `CLIENT_URL` for step 4.
+   Optional email alerts: `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_TO` (see `server/.env.example`).
 5. Deploy, then open `https://YOUR-API.onrender.com/api/resume/pdf`. The PDF should download.
    (Free tier sleeps after inactivity, so the first request can take ~50 seconds.)
 

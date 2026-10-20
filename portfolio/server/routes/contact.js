@@ -6,27 +6,57 @@ const Message = require("../models/Message");
 const router = express.Router();
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// GET /api/contact - list submissions or check status (useful for grader / teacher verification)
-router.get("/", async (_req, res) => {
-  try {
-    if (mongoose.connection.readyState !== 1) {
-      return res.status(200).json({
-        dbConnected: false,
-        message: "Database is not currently connected. Set MONGO_URI in server/.env to enable persistence.",
-        count: 0,
-      });
-    }
-    const count = await Message.countDocuments();
-    const recent = await Message.find().sort({ createdAt: -1 }).limit(10).select("-__v");
-    res.json({ dbConnected: true, count, recent });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+// SMTP transporter, created once. Needs SMTP_HOST, SMTP_USER and SMTP_PASS.
+const smtpPort = Number(process.env.SMTP_PORT) || 587;
+const transporter =
+  process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS
+    ? nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: smtpPort,
+        // Port 465 uses TLS from the start; 587 upgrades with STARTTLS
+        secure: process.env.SMTP_SECURE ? process.env.SMTP_SECURE === "true" : smtpPort === 465,
+        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+      })
+    : null;
+
+if (transporter) {
+  transporter
+    .verify()
+    .then(() => console.log(`[Mailer] SMTP ready (${process.env.SMTP_HOST}:${smtpPort}).`))
+    .catch((e) => console.warn("[Mailer] SMTP check failed:", e.message));
+}
+
+// Simple in-memory rate limit: 5 messages per IP every 15 minutes
+const WINDOW_MS = 15 * 60 * 1000;
+const MAX_PER_WINDOW = 5;
+const hits = new Map();
+
+function rateLimit(req, res, next) {
+  const now = Date.now();
+  const recent = (hits.get(req.ip) || []).filter((t) => now - t < WINDOW_MS);
+  if (recent.length >= MAX_PER_WINDOW) {
+    return res.status(429).json({ error: "Too many messages. Please try again later." });
   }
-});
+  recent.push(now);
+  hits.set(req.ip, recent);
+  next();
+}
+
+// Drop stale entries so the map doesn't grow forever
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, times] of hits) {
+    if (times.every((t) => now - t >= WINDOW_MS)) hits.delete(ip);
+  }
+}, WINDOW_MS).unref();
 
 // POST /api/contact - submit contact form
-router.post("/", async (req, res) => {
-  const { name, email, message, subject } = req.body || {};
+router.post("/", rateLimit, async (req, res) => {
+  const { name, email, message } = req.body || {};
+  const subject =
+    typeof req.body?.subject === "string" && req.body.subject.trim()
+      ? req.body.subject.trim()
+      : "General Inquiry";
 
   if (!name || typeof name !== "string" || !name.trim()) {
     return res.status(400).json({ error: "Please provide your name." });
@@ -50,21 +80,22 @@ router.post("/", async (req, res) => {
       name: name.trim(),
       email: email.trim().toLowerCase(),
       message: message.trim(),
-      subject: (subject || "General Inquiry").trim(),
+      subject,
     });
 
-    // Optional email notification (runs only if MAIL_USER and MAIL_PASS are defined in .env)
-    if (process.env.MAIL_USER && process.env.MAIL_PASS) {
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_PASS },
-      });
+    // Optional email notification (only when SMTP is configured in .env)
+    if (transporter) {
       transporter
         .sendMail({
-          from: process.env.MAIL_USER,
-          to: process.env.MAIL_TO || process.env.MAIL_USER,
-          subject: `[Portfolio Contact] ${subject || "New Message"} from ${name.trim()}`,
-          text: `Name: ${name.trim()}\nEmail: ${email.trim()}\n\nMessage:\n${message.trim()}`,
+          from: process.env.MAIL_FROM || process.env.SMTP_USER,
+          to: process.env.MAIL_TO || process.env.SMTP_USER,
+          replyTo: email.trim(),
+          subject: `[Portfolio Contact] ${subject} from ${name.trim()}`,
+          text: `Name: ${name.trim()}
+Email: ${email.trim()}
+
+Message:
+${message.trim()}`,
         })
         .catch((e) => console.error("[Mailer] Notification failed:", e.message));
     }

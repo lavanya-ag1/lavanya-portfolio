@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Nav from "./components/Nav.jsx";
 import Home from "./pages/Home.jsx";
@@ -9,6 +9,18 @@ import { API } from "./api.js";
 
 export default function App() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  // Footer section links: scroll if on home, otherwise go home first
+  const goToSection = (e, id) => {
+    e.preventDefault();
+    if (pathname === "/") {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      window.history.pushState(null, "", `#${id}`);
+    } else {
+      navigate(`/#${id}`);
+    }
+  };
 
   useEffect(() => {
     if (window.location.hash) {
@@ -71,12 +83,12 @@ export default function App() {
               <div className="footer-nav-col">
                 <h4>Navigation</h4>
                 <ul>
-                  <li><a href="#about">About Me</a></li>
-                  <li><a href="#skills">Skills & Tech</a></li>
-                  <li><a href="#projects">Projects</a></li>
-                  <li><a href="#timeline">Timeline</a></li>
-                  <li><a href="#certs">Certifications</a></li>
-                  <li><a href="#contact">Contact</a></li>
+                  <li><a href="/#about" onClick={(e) => goToSection(e, "about")}>About Me</a></li>
+                  <li><a href="/#skills" onClick={(e) => goToSection(e, "skills")}>Skills & Tech</a></li>
+                  <li><a href="/#projects" onClick={(e) => goToSection(e, "projects")}>Projects</a></li>
+                  <li><a href="/#timeline" onClick={(e) => goToSection(e, "timeline")}>Timeline</a></li>
+                  <li><a href="/#certs" onClick={(e) => goToSection(e, "certs")}>Certifications</a></li>
+                  <li><a href="/#contact" onClick={(e) => goToSection(e, "contact")}>Contact</a></li>
                 </ul>
               </div>
 
@@ -84,17 +96,17 @@ export default function App() {
                 <h4>CV Downloads</h4>
                 <ul>
                   <li>
-                    <a href="/resume/pdf" download>
+                    <a href={`${API}/api/resume/pdf`} download>
                       PDF Resume (165 KB)
                     </a>
                   </li>
                   <li>
-                    <a href="/resume/docx" download>
+                    <a href={`${API}/api/resume/docx`} download>
                       Word Resume (38 KB)
                     </a>
                   </li>
                   <li>
-                    <a href="#resume">Document Server Info</a>
+                    <a href="/#resume" onClick={(e) => goToSection(e, "resume")}>Document Server Info</a>
                   </li>
                 </ul>
               </div>

@@ -39,13 +39,15 @@ export default function CertModal({ cert, onClose }) {
           </div>
 
           {/* Certificate Image Frame */}
-          <div className="cert-preview-frame">
-            <img
-              src={cert.image}
-              alt={`${cert.title} by ${cert.issuer}`}
-              className="cert-preview-img"
-            />
-          </div>
+          {cert.image && (
+            <div className="cert-preview-frame">
+              <img
+                src={cert.image}
+                alt={`${cert.title} by ${cert.issuer}`}
+                className="cert-preview-img"
+              />
+            </div>
+          )}
 
           <div style={{ margin: "1.2rem 0" }}>
             <p style={{ fontSize: "0.95rem", lineHeight: 1.6, color: "var(--text-secondary)" }}>
@@ -58,28 +60,32 @@ export default function CertModal({ cert, onClose }) {
           </div>
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", borderTop: "1px solid var(--border)", paddingTop: "1.2rem" }}>
-            <a
-              href={cert.link}
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-primary"
-            >
-              <span>Verify Credential</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                <polyline points="15 3 21 3 21 9" />
-                <line x1="10" y1="14" x2="21" y2="3" />
-              </svg>
-            </a>
+            {cert.link && (
+              <a
+                href={cert.link}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-primary"
+              >
+                <span>Verify Credential</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </a>
+            )}
 
-            <a
-              href={cert.image}
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-secondary"
-            >
-              <span>View Full Size Image ↗</span>
-            </a>
+            {cert.image && (
+              <a
+                href={cert.image}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-secondary"
+              >
+                <span>View Full Size Image ↗</span>
+              </a>
+            )}
 
             <button className="btn btn-outline" onClick={onClose} style={{ marginLeft: "auto" }}>
               Close

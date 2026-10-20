@@ -42,7 +42,7 @@ export default function Contact() {
         body: JSON.stringify(form),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
 
       setForm({ name: "", email: "", subject: "", message: "" });
