@@ -1,37 +1,30 @@
-
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-require("dotenv").config();
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+// Allow your frontend to call the API
+app.use(cors());              // for quick fix; restrict origin later
 app.use(express.json());
 
-// Test route
-app.get("/api/health", (req, res) => {
-  res.json({
-    message: "Backend is running",
-    database: mongoose.connection.readyState === 1
-      ? "Connected"
-      : "Not connected",
-  });
+// Contact form route
+app.post('/api/contact', (req, res) => {
+  const { name, email, message } = req.body;
+  console.log('Message received:', req.body);
+  res.json({ success: true, message: 'Message sent!' });
 });
 
-// Connect to MongoDB first, then start the server
-async function startServer() {
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("MongoDB connected successfully!");
+// Serve resume files (see section 2)
+app.use('/files', express.static(path.join(__dirname, 'public/files')));
 
-    app.listen(process.env.PORT || 5000, () => {
-      console.log("Backend running on port 5000");
-    });
-  } catch (error) {
-    console.error("MongoDB connection failed:", error.message);
-    process.exit(1);
-  }
-}
+app.get('/download/pdf', (req, res) => {
+  res.download(path.join(__dirname, 'public/files/resume.pdf'), 'My_Resume.pdf');
+});
 
-startServer();
+app.get('/download/word', (req, res) => {
+  res.download(path.join(__dirname, 'public/files/resume.docx'), 'My_Resume.docx');
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

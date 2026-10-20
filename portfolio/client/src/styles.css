@@ -2,11 +2,11 @@
    Aesthetic: Deep navy-black cosmos, blue-electric glow, atmospheric particles */
 
 :root {
-  --bg: #020812;
+  --bg: #020212;
   --bg-gradient:
     radial-gradient(ellipse 80% 50% at 10% 0%, rgba(30, 80, 200, 0.35) 0%, transparent 60%),
     radial-gradient(ellipse 60% 40% at 90% 15%, rgba(56, 130, 255, 0.20) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 60% at 50% 100%, rgba(14, 40, 120, 0.40) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 50% 100%, rgba(13, 34, 99, 0.4) 0%, transparent 65%),
     radial-gradient(ellipse 30% 25% at 75% 60%, rgba(99, 179, 255, 0.08) 0%, transparent 50%),
     linear-gradient(rgba(56, 130, 255, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(56, 130, 255, 0.025) 1px, transparent 1px);

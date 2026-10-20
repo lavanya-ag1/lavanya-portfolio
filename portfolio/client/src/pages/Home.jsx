@@ -130,9 +130,9 @@ export default function Home() {
             <div className="hero-cta">
               <a
                 className="btn btn-primary"
-                href={`${API}/api/resume/pdf`}
+                href="/files/resume.pdf"
                 download
-                title="Served from Express /api/resume/pdf"
+                title="Download PDF Resume"
               >
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -145,9 +145,9 @@ export default function Home() {
 
               <a
                 className="btn btn-secondary"
-                href={`${API}/api/resume/docx`}
+                href="/files/resume.docx"
                 download
-                title="Served from Express /api/resume/docx"
+                title="Download Word Resume"
               >
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -526,19 +526,19 @@ export default function Home() {
           <div className="cv-banner" id="resume">
             <div className="cv-grid">
               <div>
-                <span className="cv-badge">Server-Rendered Documents</span>
+                <span className="cv-badge">Resume Downloads</span>
                 <h3 style={{ fontSize: "1.7rem", marginBottom: "0.8rem" }}>
                   Download Curriculum Vitae
                 </h3>
                 <p style={{ color: "var(--text-secondary)", marginBottom: "1.5rem", lineHeight: 1.6 }}>
-                  Both PDF and Microsoft Word (.docx) formats are dynamically served via dedicated Express.js backend endpoints (<code>/api/resume/pdf</code> & <code>/api/resume/docx</code>) adhering strictly to MERN course requirements.
+                  Download the PDF or editable Microsoft Word (.docx) resume directly from the portfolio's public files.
                 </p>
                 <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
                   <span style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                    Backend Service:
+                    Files:
                   </span>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontSize: "0.85rem", color: "var(--accent)", fontWeight: 600 }}>
-                    <span className="pulse-dot" style={{ width: 7, height: 7 }} /> Node.js / Express Streaming Active
+                    <span className="pulse-dot" style={{ width: 7, height: 7 }} /> Available in public/files
                   </span>
                 </div>
               </div>
@@ -546,9 +546,9 @@ export default function Home() {
               <div className="cv-options">
                 <a
                   className="cv-download-card"
-                  href={`${API}/api/resume/pdf`}
+                  href="/files/resume.pdf"
                   download
-                  title="Download PDF via Express route"
+                  title="Download PDF resume"
                 >
                   <div className="cv-format-info">
                     <div className="cv-icon pdf">PDF</div>
@@ -566,9 +566,9 @@ export default function Home() {
 
                 <a
                   className="cv-download-card"
-                  href={`${API}/api/resume/docx`}
+                  href="/files/resume.docx"
                   download
-                  title="Download DOCX via Express route"
+                  title="Download Word resume"
                 >
                   <div className="cv-format-info">
                     <div className="cv-icon docx">DOC</div>

@@ -72,8 +72,7 @@ export const projects = [
       "Applied Llama Guard filters to prevent hallucinations in financial reporting"
     ],
     tech: ["Python", "FastAPI", "LangChain", "LangGraph", "pgvector", "Redis", "RAG"],
-    github: null, // TODO: add repo URL once public
-    live: null,
+    github: "https://github.com/lavanya-ag1/news_agent", // TODO: add repo URL once public
     featured: true,
   },
   {
@@ -91,7 +90,6 @@ export const projects = [
     ],
     tech: ["React.js", "Express.js", "MongoDB", "Node.js", "Mongoose", "JWT"],
     github: null, // TODO: add repo URL once public
-    live: null,
     featured: true,
   },
   {
@@ -109,7 +107,6 @@ export const projects = [
     ],
     tech: ["React.js", "Node.js", "Express.js", "MongoDB", "REST APIs", "CSS Grid"],
     github: null, // TODO: add repo URL once public
-    live: null,
     featured: true,
   },
   {
@@ -126,7 +123,7 @@ export const projects = [
       "Single-page navigation with React Router SPA fallback"
     ],
     tech: ["React 18", "Express.js", "Node.js", "MongoDB", "Framer Motion", "Vite"],
-    github: "https://github.com/lavanya-ag1/lavanya-portfolio",
+    github: "https://github.com/lavanya-ag1/portfolio",
     live: "https://lavanya-portfolio.vercel.app",
     featured: false,
   },
@@ -192,14 +189,13 @@ export const timeline = [
 
 export const certs = [
   {
-    title: "AI/ML Internship — No Objection Certificate",
-    issuer: "JK Lakshmipat University (for Dynamicore Strategies)",
+    title: "AI/ML Internship Certificate",
+    issuer: "Dynamicore Strategies Pvt. Ltd.",
     year: "2026",
     badge: "Industry Internship",
-    image: null, // add the scanned certificate to /public and set its path here
+    image: "certi.pdf", // add the scanned certificate to /public and set its path here
     skills: "FastAPI, LangChain, LangGraph, RAG, pgvector, Redis, Postman",
     description: "Official internship authorization certificate from JKLU (IET) confirming the AI/ML engineering internship at Dynamicore Strategies Private Limited, Jaipur. Role: Financial AI Model Intern.",
-    link: "https://jklu.edu.in",
   },
   {
     title: "Red Hat System Administration I (RH124 - RHA)",

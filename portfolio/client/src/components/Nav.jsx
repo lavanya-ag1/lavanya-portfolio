@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { profile } from "../data.js";
-import { API } from "../api.js";
 
 export default function Nav() {
   const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark");
@@ -140,9 +139,9 @@ export default function Nav() {
 
           <a
             className="btn-nav-cv"
-            href={`${API}/api/resume/pdf`}
+            href="/files/resume.pdf"
             download
-            title="Download PDF Resume from Node/Express API"
+            title="Download PDF Resume"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -188,10 +187,10 @@ export default function Nav() {
             </a>
           ))}
           <div style={{ display: "flex", gap: "0.8rem", marginTop: "1rem" }}>
-            <a className="btn btn-primary" href={`${API}/api/resume/pdf`} download style={{ flex: 1 }}>
+            <a className="btn btn-primary" href="/files/resume.pdf" download style={{ flex: 1 }}>
               Download PDF CV
             </a>
-            <a className="btn btn-secondary" href={`${API}/api/resume/docx`} download style={{ flex: 1 }}>
+            <a className="btn btn-secondary" href="/files/resume.docx" download style={{ flex: 1 }}>
               Word CV
             </a>
           </div>

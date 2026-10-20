@@ -5,7 +5,6 @@ import Home from "./pages/Home.jsx";
 import Work from "./pages/Work.jsx";
 import Contact from "./pages/Contact.jsx";
 import { profile } from "./data.js";
-import { API } from "./api.js";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -96,17 +95,17 @@ export default function App() {
                 <h4>CV Downloads</h4>
                 <ul>
                   <li>
-                    <a href={`${API}/api/resume/pdf`} download>
+                    <a href="/files/resume.pdf" download>
                       PDF Resume (165 KB)
                     </a>
                   </li>
                   <li>
-                    <a href={`${API}/api/resume/docx`} download>
+                    <a href="/files/resume.docx" download>
                       Word Resume (38 KB)
                     </a>
                   </li>
                   <li>
-                    <a href="/#resume" onClick={(e) => goToSection(e, "resume")}>Document Server Info</a>
+                    <a href="/#resume" onClick={(e) => goToSection(e, "resume")}>Resume Download Section</a>
                   </li>
                 </ul>
               </div>
