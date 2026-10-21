@@ -1,0 +1,25 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+portfolio/server/.env
+portfolio/client/.env
+
+# Dependencies
+node_modules/
+portfolio/server/node_modules/
+portfolio/client/node_modules/
+
+# Production build outputs
+dist/
+portfolio/client/dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# OS metadata
+.DS_Store
+Thumbs.db

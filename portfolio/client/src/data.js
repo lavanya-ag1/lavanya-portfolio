@@ -89,7 +89,7 @@ export const projects = [
       "Secure JWT authentication with role-based dashboard controls"
     ],
     tech: ["React.js", "Express.js", "MongoDB", "Node.js", "Mongoose", "JWT"],
-    github: null, // TODO: add repo URL once public
+    github: "https://github.com/lavanya-ag1/placement_project",
     featured: true,
   },
   {
@@ -193,7 +193,7 @@ export const certs = [
     issuer: "Dynamicore Strategies Pvt. Ltd.",
     year: "2026",
     badge: "Industry Internship",
-    image: "certi.pdf", // add the scanned certificate to /public and set its path here
+    image: "/certi.jpg", // add the scanned certificate to /public and set its path here
     skills: "FastAPI, LangChain, LangGraph, RAG, pgvector, Redis, Postman",
     description: "Official internship authorization certificate from JKLU (IET) confirming the AI/ML engineering internship at Dynamicore Strategies Private Limited, Jaipur. Role: Financial AI Model Intern.",
   },

@@ -1,45 +1,29 @@
 # Lavanya Agarwal | Personal Portfolio (MERN Stack)
 
-Full-stack portfolio built with React (Vite), Node.js + Express, and MongoDB (Mongoose).
-It has a typewriter hero, animated skill bars, project filters, timeline, certifications,
-dark/light mode, a contact form saved to MongoDB, and CV download (PDF + DOCX) served by the backend.
+Full-stack developer portfolio built with React 18 (Vite), Node.js + Express, and MongoDB Atlas (Mongoose).
+Features interactive typewriter hero, skill bars, project filters, timeline, certifications, dark/light theme switcher, a contact form persisted to MongoDB with rate limiting, and dual resume streaming (PDF + DOCX).
 
-**Live site:** https://lavanya-portfolio.vercel.app
-**API:** _add your Render URL here_
+- **Live Site:** [https://lavanya-portfolio.vercel.app](https://lavanya-portfolio.vercel.app)
+- **API Service:** [https://lavanya-portfolio-api.onrender.com](https://lavanya-portfolio-api.onrender.com)
+- **Deployment Guide:** See [DEPLOY.md](DEPLOY.md)
+- **Complete Documentation:** See top-level [README.md](../README.md)
 
 ## Structure
-```
-client/   React frontend (all content is in src/data.js)
-server/   Express API (contact form + resume downloads)
+```text
+client/   React frontend (Vite, Framer Motion, src/data.js)
+server/   Express API (MongoDB Atlas, contact form, resume routes)
 ```
 
-## Local setup
-```bash
+## Quick Start
+```powershell
 # 1. Backend
 cd server
 npm install
-cp .env.example .env     # then fill in MONGO_URI
-npm run dev              # http://localhost:5000
+npm run test-db    # Run connection diagnostics for MongoDB Atlas
+npm run dev        # http://localhost:5000
 
-# 2. Frontend (new terminal)
+# 2. Frontend (in new terminal)
 cd client
 npm install
-cp .env.example .env
-npm run dev              # http://localhost:5173
+npm run dev        # http://localhost:5173
 ```
-
-## API
-| Method | Route | Purpose |
-|---|---|---|
-| POST | /api/contact | Save a message `{name, email, message}` |
-| GET | /api/resume/pdf | Download resume PDF |
-| GET | /api/resume/docx | Download resume Word file |
-
-## Deployment
-Full step-by-step guide: see [DEPLOY.md](DEPLOY.md).
-
-- **Backend (Render):** root dir `server`, build `npm install`, start `npm start`. Add env vars `MONGO_URI`, `CLIENT_URL` (your Vercel URL).
-- **Frontend (Vercel):** root dir `client`, framework Vite. Add env var `VITE_API_URL` (your Render URL).
-- **MongoDB Atlas:** allow network access `0.0.0.0/0` so Render can connect.
-
-Never commit `.env`. It is listed in `.gitignore`.
