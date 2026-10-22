@@ -105,7 +105,7 @@ export const projects = [
     ],
     tech: ["HTML", "CSS", "JavaScript", "Responsive Design"],
     live: "https://lavanya-ag1.github.io/liana-website/",
-    github: null,
+    github: "https://github.com/lavanya-ag1/liana-website",
     featured: true,
   },
 ];
@@ -176,7 +176,7 @@ export const certs = [
     badge: "Industry Internship",
     image: "/certi.webp",
     skills: "FastAPI, LangChain, LangGraph, RAG, pgvector, Redis, Postman",
-    description: "Official internship authorization certificate from JKLU (IET) confirming the AI/ML engineering internship at Dynamicore Strategies Private Limited, Jaipur. Role: Financial AI Model Intern.",
+    description: "Certificate recognizing the AI/ML internship at Dynamicore Strategies Private Limited, Jaipur. Role: Financial AI Model Intern.",
   },
   {
     title: "Red Hat System Administration I (RH124 - RHA)",
