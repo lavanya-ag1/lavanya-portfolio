@@ -5,7 +5,7 @@ React + Vite frontend, Node.js + Express API, MongoDB Atlas for contact messages
 
 - **Source:** [github.com/lavanya-ag1/lavanya-portfolio](https://github.com/lavanya-ag1/lavanya-portfolio)
 - **GitHub:** [github.com/lavanya-ag1](https://github.com/lavanya-ag1) · **LinkedIn:** [linkedin.com/in/lavanya-ag5](https://www.linkedin.com/in/lavanya-ag5/) · **Email:** [lavanya.agarwal1508@gmail.com](mailto:lavanya.agarwal1508@gmail.com)
-- **Live site:** not deployed yet — follow [portfolio/DEPLOY.md](portfolio/DEPLOY.md), then add the URL here.
+- **Live site:** (https://lavanya-portfolio-eight-sepia.vercel.app)
 
 ## Features
 
