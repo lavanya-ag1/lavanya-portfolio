@@ -185,20 +185,15 @@ For exhaustive instructions, see [portfolio/DEPLOY.md](./portfolio/DEPLOY.md).
    - Create a database user under **Database Access** and copy the connection string.
 
 2. **Backend on Render:**
-   - Create a new **Web Service** pointing to your repository `lavanya-ag1/lavanya-portfolio`.
-   - **Root Directory:** `portfolio/server` *(Crucial)*
-   - **Build Command:** `npm install`
-   - **Start Command:** `npm start`
-   - **Environment Variables:**
-     - `MONGO_URI` = your Atlas connection string
-     - `CLIENT_URL` = your Vercel URL (e.g. `https://lavanya-portfolio.vercel.app`)
+   - Create a new **Blueprint** from the repository `lavanya-ag1/lavanya-portfolio`; Render will read `render.yaml`.
+   - Set the required `MONGO_URI` secret to your Atlas connection string.
+   - Alternatively, create a Web Service manually with root directory `portfolio/server`, build command `npm install`, and start command `npm start`.
 
 3. **Frontend on Vercel:**
    - Create a new project importing `lavanya-ag1/lavanya-portfolio`.
    - **Framework:** `Vite`
    - **Root Directory:** `portfolio/client` *(Crucial)*
-   - **Environment Variable:**
-     - `VITE_API_URL` = your Render backend URL (e.g. `https://lavanya-portfolio-api.onrender.com`)
+   - Optional environment variable: `VITE_API_URL` = your Render backend URL if it differs from `https://lavanya-portfolio-api.onrender.com`. The client uses localhost automatically during local development.
    - Click **Deploy**.
 
 ---
