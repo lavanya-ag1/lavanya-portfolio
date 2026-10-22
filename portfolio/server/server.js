@@ -2,41 +2,42 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const path = require("path");
 
 const app = express();
+const isProduction = process.env.NODE_ENV === "production";
 
-// Allow cross-origin requests from frontend (dev & production)
-const configuredOrigins = (process.env.CLIENT_URL || "")
+// CORS: allow the frontend URL(s) from CLIENT_URL, plus localhost during development
+const allowedOrigins = (process.env.CLIENT_URL || "")
   .split(",")
   .map((u) => u.trim().replace(/\/$/, ""))
   .filter(Boolean);
+const localhostRe = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+
+if (isProduction && allowedOrigins.length === 0) {
+  console.warn("[CORS] CLIENT_URL is not set, so requests from any website are allowed. Set it to your frontend URL.");
+}
 
 app.use(
   cors({
     origin: (origin, callback) => {
+      // No Origin header: same-origin requests, curl, health checks
       if (!origin) return callback(null, true);
-      if (configuredOrigins.length === 0) return callback(null, true);
-      if (configuredOrigins.includes(origin)) return callback(null, true);
-      if (/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) return callback(null, true);
-      return callback(null, true); // Permissive fallback to prevent CORS blockage
+      if (isProduction && allowedOrigins.length === 0) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      if (!isProduction && localhostRe.test(origin)) return callback(null, true);
+      return callback(null, false);
     },
-    credentials: true,
   })
 );
 
+// Render and similar hosts sit behind one proxy; needed so req.ip is the visitor's IP
 app.set("trust proxy", 1);
 app.use(express.json({ limit: "50kb" }));
 
-// Serve static resume files directly if accessed via /files
-app.use("/files", express.static(path.join(__dirname, "files")));
-
-// Root route
 app.get("/", (_req, res) => {
   res.json({
     status: "online",
-    service: "Lavanya Agarwal Portfolio API (MERN Stack)",
-    mongo: mongoose.connection.readyState === 1 ? "connected" : "connecting/pending",
+    service: "Lavanya Agarwal Portfolio API",
     endpoints: {
       contact: "POST /api/contact",
       resumePdf: "GET /api/resume/pdf",
@@ -46,66 +47,49 @@ app.get("/", (_req, res) => {
   });
 });
 
-// Health check endpoint
 app.get("/api/health", (_req, res) => {
   const states = ["disconnected", "connected", "connecting", "disconnecting"];
-  const dbState = states[mongoose.connection.readyState] || "unknown";
   res.json({
     status: "ok",
     timestamp: new Date().toISOString(),
     uptime: Math.floor(process.uptime()),
     database: {
-      status: dbState,
+      status: states[mongoose.connection.readyState] || "unknown",
       connected: mongoose.connection.readyState === 1,
     },
   });
 });
 
-// Mount modular routes
 app.use("/api/contact", require("./routes/contact"));
 app.use("/api/resume", require("./routes/resume"));
 
-// Legacy/direct resume download endpoints for backward compatibility
-app.get("/download/pdf", (req, res) => {
-  const file = path.join(__dirname, "files", "resume.pdf");
-  res.download(file, "Lavanya_Agarwal_Resume.pdf");
-});
-
-app.get("/download/word", (req, res) => {
-  const file = path.join(__dirname, "files", "resume.docx");
-  res.download(file, "Lavanya_Agarwal_Resume.docx");
-});
-
-// 404 handler
 app.use((_req, res) => {
   res.status(404).json({ error: "Endpoint not found." });
 });
 
-// Global error handler
+// Errors with a 4xx status (e.g. malformed JSON, body too large) are the client's fault
 app.use((err, _req, res, _next) => {
-  console.error("Unhandled server error:", err);
-  res.status(500).json({ error: "Internal server error." });
+  const status = err.status || err.statusCode || 500;
+  if (status >= 500) console.error("Unhandled server error:", err);
+  res.status(status).json({
+    error: status === 413 ? "Request is too large." : status < 500 ? "Invalid request." : "Internal server error.",
+  });
 });
 
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB Atlas
 if (process.env.MONGO_URI) {
   mongoose
     .connect(process.env.MONGO_URI)
-    .then(() => {
-      console.log("[MongoDB] Connected successfully to MongoDB Atlas database.");
-    })
+    .then(() => console.log("[MongoDB] Connected."))
     .catch((err) => {
-      console.warn(`[MongoDB] Connection failed: ${err.message}.`);
-      console.warn("[MongoDB] Running in standalone mode. Note: IP must be allowed in Atlas (0.0.0.0/0).");
+      console.warn(`[MongoDB] Connection failed: ${err.message}`);
+      console.warn("[MongoDB] Check the URI and that Atlas Network Access allows this server's IP.");
     });
 } else {
-  console.warn("[MongoDB] Notice: MONGO_URI not defined in .env.");
+  console.warn("[MongoDB] MONGO_URI is not set; messages will only be delivered by email (if SMTP is set up).");
 }
 
-app.listen(PORT, () => {
-  console.log(`[Server] Portfolio API running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`[Server] Portfolio API running on port ${PORT}`));
 
 module.exports = app;

@@ -2,12 +2,27 @@ services:
   - type: web
     name: lavanya-portfolio-api
     runtime: node
+    plan: free
     rootDir: portfolio/server
-    buildCommand: npm install
+    buildCommand: npm ci --omit=dev
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
       - key: MONGO_URI
+        sync: false
+      # Your deployed frontend URL, e.g. https://your-site.vercel.app (comma-separate several)
+      - key: CLIENT_URL
+        sync: false
+      # Optional email alerts; leave unset to skip
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_TO
         sync: false

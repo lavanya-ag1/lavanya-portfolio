@@ -1,29 +1,22 @@
-# Lavanya Agarwal | Personal Portfolio (MERN Stack)
+# Lavanya Agarwal | Portfolio (MERN)
 
-Full-stack developer portfolio built with React 18 (Vite), Node.js + Express, and MongoDB Atlas (Mongoose).
-Features interactive typewriter hero, skill bars, project filters, timeline, certifications, dark/light theme switcher, a contact form persisted to MongoDB with rate limiting, and dual resume streaming (PDF + DOCX).
+React (Vite) frontend in `client/`, Express + MongoDB API in `server/`.
 
-- **Live Site:** [https://lavanya-portfolio.vercel.app](https://lavanya-portfolio.vercel.app)
-- **API Service:** [https://lavanya-portfolio-api.onrender.com](https://lavanya-portfolio-api.onrender.com)
-- **Deployment Guide:** See [DEPLOY.md](DEPLOY.md)
-- **Complete Documentation:** See top-level [README.md](../README.md)
+- Featured project: [LIANA — Fashion Storefront](https://lavanya-ag1.github.io/liana-website/).
+- Full documentation: [../README.md](../README.md)
+- Deployment guide: [DEPLOY.md](DEPLOY.md)
 
-## Structure
-```text
-client/   React frontend (Vite, Framer Motion, src/data.js)
-server/   Express API (MongoDB Atlas, contact form, resume routes)
-```
+## Quick start
 
-## Quick Start
 ```powershell
-# 1. Backend
+# 1. API (http://localhost:5000)
 cd server
 npm install
-npm run test-db    # Run connection diagnostics for MongoDB Atlas
-npm run dev        # http://localhost:5000
+Copy-Item .env.example .env   # fill in MONGO_URI
+npm run dev
 
-# 2. Frontend (in new terminal)
+# 2. Frontend (http://localhost:5173), in a new terminal
 cd client
 npm install
-npm run dev        # http://localhost:5173
+npm run dev
 ```

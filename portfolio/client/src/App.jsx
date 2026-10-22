@@ -1,13 +1,36 @@
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Nav from "./components/Nav.jsx";
 import Home from "./pages/Home.jsx";
 import Work from "./pages/Work.jsx";
 import Contact from "./pages/Contact.jsx";
-import { profile } from "./data.js";
+import { profile, resumeFiles } from "./data.js";
+
+const sectionLinks = [
+  ["about", "About Me"],
+  ["skills", "Skills & Tech"],
+  ["projects", "Projects"],
+  ["process", "Work Process"],
+  ["timeline", "Timeline"],
+  ["certs", "Certifications"],
+  ["contact", "Contact"],
+];
+
+function NotFound() {
+  return (
+    <section className="wrap section page-top" style={{ textAlign: "center" }}>
+      <span className="section-tag">404 Error</span>
+      <h1 style={{ margin: "1rem 0" }}>Page Not Found</h1>
+      <p style={{ marginBottom: "2rem" }}>The requested page could not be located.</p>
+      <Link className="btn btn-primary" to="/">
+        Return to Home
+      </Link>
+    </section>
+  );
+}
 
 export default function App() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const navigate = useNavigate();
 
   // Footer section links: scroll if on home, otherwise go home first
@@ -21,44 +44,29 @@ export default function App() {
     }
   };
 
+  // On route change: jump to the #section if there is one, otherwise to the top
   useEffect(() => {
-    if (window.location.hash) {
-      const id = window.location.hash.replace("#", "");
+    if (hash) {
       const timer = setTimeout(() => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
-        }
+        document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth" });
       }, 150);
       return () => clearTimeout(timer);
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [pathname]);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+    window.scrollTo({ top: 0 });
+  }, [pathname, hash]);
 
   return (
     <>
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
       <Nav />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/work" element={<Work />} />
           <Route path="/contact" element={<Contact />} />
-          <Route
-            path="*"
-            element={
-              <section className="wrap section" style={{ paddingTop: "calc(var(--nav-height) + 5rem)", textAlign: "center" }}>
-                <span className="section-tag">404 Error</span>
-                <h1 style={{ margin: "1rem 0" }}>Page Not Found</h1>
-                <p style={{ marginBottom: "2rem" }}>The requested page could not be located.</p>
-                <a className="btn btn-primary" href="/">Return to Home</a>
-              </section>
-            }
-          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
 
@@ -67,10 +75,12 @@ export default function App() {
           <div className="footer-top">
             <div className="footer-brand">
               <div className="brand" style={{ marginBottom: "0.5rem" }}>
-                <div className="brand-badge">{profile.initials}</div>
+                <div className="brand-logo-img-wrapper footer-brand-logo">
+                  <img src="/favicon.jpg" alt={`${profile.name} Logo`} className="brand-logo-img" />
+                </div>
                 <div className="brand-name">
-                  <span>{profile.name}</span>
-                  <span>Full-Stack Developer</span>
+                  <span className="brand-name-title">{profile.name}</span>
+                  <span className="brand-name-sub">MERN & AI Developer</span>
                 </div>
               </div>
               <p>
@@ -82,31 +92,30 @@ export default function App() {
               <div className="footer-nav-col">
                 <h4>Navigation</h4>
                 <ul>
-                  <li><a href="/#about" onClick={(e) => goToSection(e, "about")}>About Me</a></li>
-                  <li><a href="/#skills" onClick={(e) => goToSection(e, "skills")}>Skills & Tech</a></li>
-                  <li><a href="/#projects" onClick={(e) => goToSection(e, "projects")}>Projects</a></li>
-                  <li><a href="/#timeline" onClick={(e) => goToSection(e, "timeline")}>Timeline</a></li>
-                  <li><a href="/#certs" onClick={(e) => goToSection(e, "certs")}>Certifications</a></li>
-                  <li><a href="/#contact" onClick={(e) => goToSection(e, "contact")}>Contact</a></li>
+                  {sectionLinks.map(([id, label]) => (
+                    <li key={id}>
+                      <a href={`/#${id}`} onClick={(e) => goToSection(e, id)}>
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="footer-nav-col">
+                <h4>Pages</h4>
+                <ul>
+                  <li><Link to="/">Home</Link></li>
+                  <li><Link to="/work">All Projects</Link></li>
+                  <li><Link to="/contact">Contact Page</Link></li>
                 </ul>
               </div>
 
               <div className="footer-nav-col">
                 <h4>CV Downloads</h4>
                 <ul>
-                  <li>
-                    <a href="/files/resume.pdf" download>
-                      PDF Resume (165 KB)
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/files/resume.docx" download>
-                      Word Resume (38 KB)
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/#resume" onClick={(e) => goToSection(e, "resume")}>Resume Download Section</a>
-                  </li>
+                  <li><a href={resumeFiles.pdf.href} download>PDF Resume ({resumeFiles.pdf.size})</a></li>
+                  <li><a href={resumeFiles.docx.href} download>Word Resume ({resumeFiles.docx.size})</a></li>
                 </ul>
               </div>
 
@@ -123,12 +132,12 @@ export default function App() {
 
           <div className="footer-bottom">
             <span>
-              © {new Date().getFullYear()} {profile.name} • Built with React 18, Node.js, Express & MongoDB (MERN Stack)
+              © {new Date().getFullYear()} {profile.name} • Built with React, Node.js, Express & MongoDB
             </span>
 
-            <button className="back-to-top" onClick={scrollToTop} aria-label="Back to top">
+            <button className="back-to-top" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
               <span>Back to Top</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <polyline points="18 15 12 9 6 15" />
               </svg>
             </button>

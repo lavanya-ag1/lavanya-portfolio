@@ -1,5 +1,4 @@
-// Comprehensive portfolio data for Lavanya Agarwal
-// Clean, authentic content reflecting genuine university experience, AI internship, and MERN stack engineering
+// All portfolio content lives here. Edit this file to update the site.
 
 export const profile = {
   name: "Lavanya Agarwal",
@@ -22,8 +21,8 @@ export const profile = {
   github: "https://github.com/lavanya-ag1",
   linkedin: "https://www.linkedin.com/in/lavanya-ag5/",
   stats: [
-    { label: "Production Projects", value: "4+" },
-    { label: "Internship Completed", value: "AI/ML (Dynamicore)" },
+    { label: "Projects Built", value: "4" },
+    { label: "Internship Completed", value: "AI/ML Intern at Dynamicore Strategies" },
     { label: "Graduation Year", value: "2028" },
   ],
 };
@@ -63,7 +62,7 @@ export const projects = [
     name: "Multi-Agent News & Financial Research System",
     badge: "AI Systems & Backend",
     category: "AI & ML",
-    image: "/project-news.jpg",
+    image: "/project-news.webp",
     description: "An automated intelligence platform that ingests, verifies, and analyzes high-frequency financial news articles. Utilizes multi-agent coordination with LangGraph, pgvector similarity search, and Redis caching to generate cited executive briefings.",
     highlights: [
       "Orchestrated multi-agent DAG workflows using LangGraph and LangChain",
@@ -72,7 +71,7 @@ export const projects = [
       "Applied Llama Guard filters to prevent hallucinations in financial reporting"
     ],
     tech: ["Python", "FastAPI", "LangChain", "LangGraph", "pgvector", "Redis", "RAG"],
-    github: "https://github.com/lavanya-ag1/news_agent", // TODO: add repo URL once public
+    github: "https://github.com/lavanya-ag1/news_agent",
     featured: true,
   },
   {
@@ -80,7 +79,7 @@ export const projects = [
     name: "CPCT: Campus Placement & Career Tracking Portal",
     badge: "Full-Stack MERN",
     category: "Full-Stack",
-    image: "/project-cpct.jpg",
+    image: "/project-cpct.webp",
     description: "A centralized university placement management suite built for students and training & placement officers. Manages company drives, automated eligibility filtering based on GPA and backlogs, and real-time recruitment analytics.",
     highlights: [
       "Dynamic eligibility engine calculating student qualification criteria across batch records",
@@ -93,39 +92,21 @@ export const projects = [
     featured: true,
   },
   {
-    id: "cybersafe",
-    name: "CyberSafe: Legal & Regulatory Compliance System",
-    badge: "Full-Stack Web App",
-    category: "Full-Stack",
-    image: "/project-cybersafe.jpg",
-    description: "An enterprise regulatory compliance management dashboard designed for corporate governance. Features statutory audit trail logging, deadline tracking for legal filings, and granular role permissions.",
+    id: "liana-website",
+    name: "LIANA — Fashion Storefront",
+    badge: "Fashion Storefront",
+    category: "Frontend",
+    image: "/project-liana.svg",
+    description: "A fashion storefront concept for LIANA, showcasing curated clothing categories, seasonal offers, trending styles, and the brand story in an elegant shopping experience.",
     highlights: [
-      "Tamper-evident activity audit log with persistent timestamp tracking",
-      "Configurable compliance deadline calendar with automated urgency indicators",
-      "Secure REST backend with payload sanitization and structured schemas",
-      "Responsive data table views with multi-column filtering and export options"
+      "Browse curated dresses, tops, and bottoms",
+      "Discover trending styles and seasonal offers",
+      "Explore customer testimonials and the LIANA brand story"
     ],
-    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "REST APIs", "CSS Grid"],
-    github: null, // TODO: add repo URL once public
+    tech: ["HTML", "CSS", "JavaScript", "Responsive Design"],
+    live: "https://lavanya-ag1.github.io/liana-website/",
+    github: null,
     featured: true,
-  },
-  {
-    id: "mern-portfolio",
-    name: "Personal Developer Portfolio & Resume Service",
-    badge: "Full-Stack MERN",
-    category: "Full-Stack",
-    image: "/profile.jpg",
-    description: "This portfolio website built from scratch with React 18, Express.js, and MongoDB. Features dual binary resume streaming endpoints (PDF and DOCX), database contact ingestion, dark/light theme switching, and fluid scroll animations.",
-    highlights: [
-      "Custom Express routes serving binary PDF and DOCX resume downloads",
-      "MongoDB contact form storage using Mongoose schema validation",
-      "Handcrafted accessible UI with zero AI boilerplate templates",
-      "Single-page navigation with React Router SPA fallback"
-    ],
-    tech: ["React 18", "Express.js", "Node.js", "MongoDB", "Framer Motion", "Vite"],
-    github: "https://github.com/lavanya-ag1/portfolio",
-    live: "https://lavanya-portfolio.vercel.app",
-    featured: false,
   },
 ];
 
@@ -193,7 +174,7 @@ export const certs = [
     issuer: "Dynamicore Strategies Pvt. Ltd.",
     year: "2026",
     badge: "Industry Internship",
-    image: "/certi.jpg", // add the scanned certificate to /public and set its path here
+    image: "/certi.webp",
     skills: "FastAPI, LangChain, LangGraph, RAG, pgvector, Redis, Postman",
     description: "Official internship authorization certificate from JKLU (IET) confirming the AI/ML engineering internship at Dynamicore Strategies Private Limited, Jaipur. Role: Financial AI Model Intern.",
   },
@@ -202,7 +183,7 @@ export const certs = [
     issuer: "Red Hat",
     year: "2026",
     badge: "Professional Certification",
-    image: "/cert-redhat.png",
+    image: "/cert-redhat.webp",
     skills: "Linux Administration, Shell Scripting, System Management, Red Hat Enterprise Linux",
     description: "Certificate of attendance for Red Hat System Administration I (RH124 - RHA Ver. 10) — 40 credit hours — awarded by Karl Reynolds, Senior Director, Global Learning Services. Verifiable via Credly.",
     link: "https://www.credly.com/badges/0476ffc5-0a18-418b-a74c-0ca778eb0bb4",
@@ -212,9 +193,16 @@ export const certs = [
     issuer: "Infosys Springboard",
     year: "2025",
     badge: "Professional Course",
-    image: "/cert-infosys-dbms.png",
+    image: "/cert-infosys-dbms.webp",
     skills: "Relational Modeling, SQL, Schema Normalization, Queries",
-    description: "Course completion certification awarded by Infosys Springboard with QR credential verification on Wingspan platform.",
-    link: "https://verify.onwingspan.com",
+    description: "Course completion certificate awarded by Infosys Springboard, verifiable through the QR code on the certificate.",
+    // Add the certificate-specific verification URL here (the QR code on the certificate links to it)
+    link: null,
   },
 ];
+
+// Resume files served from client/public/files (sizes shown on the download buttons)
+export const resumeFiles = {
+  pdf: { href: "/files/resume.pdf", size: "165 KB" },
+  docx: { href: "/files/resume.docx", size: "38 KB" },
+};
